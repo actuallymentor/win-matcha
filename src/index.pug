@@ -3,6 +3,17 @@ doctype html
 html
 	include pug/_header.pug
 	body
-		main
-			h1 Hello sir
+		main.container
+			div.row#thebox
+				h1 Win een Premium Matcha set t.w.v. €93.50!
+				div.col.m4.offset-m1.s12
+					
+					img( src="./assets/aiya-gift-set-fulltransx500.png" )
+				div.col.m4.offset-m1.s12
+					h1 Doe gratis mee!
+					form( action="https://sendy.skillcollector.com/subscribe" method="POST" accept-charset="utf-8" ).row#signup
+						input( type="text" name="name" id="name", placeholder="Uw Naam" ).col.m12
+						input( type="email" name="email" id="email", placeholder="Uw Email" ).col.m12
+						input( type="hidden" name="list" value="mOyHMV7z2GouhMaCpTdqpw" )
+						input( type="submit" name="submit" id="submit", value="Doe gratis mee!" ).col.m12
 	include pug/_footer.pug

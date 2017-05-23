@@ -3,6 +3,9 @@ $background-color: #efefef;
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
 
+/* grid */
+@import "grid";
+
 body {
 	// Override browser default padding and margin
 	margin: 0;
@@ -16,6 +19,14 @@ body {
 	flex-direction: column;
 	// Backgorund color
 	background: $background-color;
+
+	// Matcha background image
+    // background-image: url(/assets/matcha-background.jpg);
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-attachment: fixed;
+    // background-position: center;
+    background: #e3f2fd;
 }
 
 main {
@@ -25,6 +36,31 @@ main {
 	display: flex;
 	align-items: center;
   	justify-content: center;
+  	flex-direction: column;
+  	#thebox {
+  		padding: 20px;
+  		width: 100%;
+  		h1 {
+  			text-align: center;
+  			margin-bottom: 80px;
+  		}
+  		#signup {
+  			input {
+  				padding: 10px;
+  				border: 0;
+  				margin: 5px 0;
+  				text-align: center;
+  			}
+  			input[type="submit"] {
+  				background-color: #4caf50;
+  				color: white;
+  				font-size: 20px;
+  			}
+  		}
+  	}
+  	.whiteback {
+  		background: rgba(255, 255, 255, 0.5);
+  	}
 }
 
 #footer {
