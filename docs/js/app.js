@@ -52,8 +52,21 @@
 	var _styles = __webpack_require__(/*! ../css/styles.scss */ 1);
 	
 	var _styles2 = _interopRequireDefault(_styles);
-
+	
+	var _trackers = __webpack_require__(/*! ./trackers */ 5);
+	
+	var _trackers2 = _interopRequireDefault(_trackers);
+	
+	var _eventTrackers = __webpack_require__(/*! ./event-trackers */ 7);
+	
+	var _eventTrackers2 = _interopRequireDefault(_eventTrackers);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// Import trackers
+	window.onload = function (f) {
+		_eventTrackers2.default.init();
+	}; // Grab styles
 
 /***/ }),
 /* 1 */
@@ -413,6 +426,568 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ }),
+/* 5 */
+/*!****************************!*\
+  !*** ./src/js/trackers.js ***!
+  \****************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.GoogleAnalytics = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _universalGa = __webpack_require__(/*! universal-ga */ 6);
+	
+	var _universalGa2 = _interopRequireDefault(_universalGa);
+	
+	var _config = __webpack_require__(/*! ../../modules/config */ 8);
+	
+	var _config2 = _interopRequireDefault(_config);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// Initialize Google Analytics
+	_universalGa2.default.initialize(_config2.default.track.ga);
+	var debug = false;
+	
+	var GoogleAnalytics = exports.GoogleAnalytics = function () {
+		function GoogleAnalytics() {
+			_classCallCheck(this, GoogleAnalytics);
+	
+			if (debug) console.log('Visitor tracker constructor');
+			if (debug) console.log('Submitting visitor tracking data');
+			_universalGa2.default.pageview(window.location.pathname ? window.location.pathname : '/');
+			_universalGa2.default.plugin('displayfeatures');
+		}
+	
+		_createClass(GoogleAnalytics, [{
+			key: 'event',
+			value: function event(category, action, label) {
+				_universalGa2.default.event(category, action, {
+					eventLabel: label
+				});
+			}
+		}]);
+	
+		return GoogleAnalytics;
+	}();
+	
+	exports.default = new GoogleAnalytics();
+
+/***/ }),
+/* 6 */
+/*!*****************************************!*\
+  !*** ./~/universal-ga/lib/analytics.js ***!
+  \*****************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	/*!
+	 * universal-ga v1.1.0
+	 * https://github.com/daxko/universal-ga 
+	 *
+	 * Copyright (c) 2017 Daxko
+	 * MIT License
+	 */
+	
+	(function (global) {
+	  'use strict';
+	
+	  function warn(s) {
+	    console.warn('[analytics]', s);
+	  }
+	
+	  function _set() {
+	    var args = [],
+	        length = arguments.length,
+	        i = 0;
+	
+	    for (; i < length; i++) {
+	      args.push(arguments[i]);
+	    }
+	
+	    while (typeof args[args.length - 1] === 'undefined') {
+	      args.pop();
+	    }
+	
+	    /* jshint validthis: true */
+	    if (this._namespace) {
+	      args[0] = this._namespace + '.' + args[0];
+	      this._namespace = null;
+	    }
+	
+	    if (window && typeof window.ga === 'function') {
+	      window.ga.apply(undefined, args);
+	    }
+	  }
+	
+	  var Analytics = function Analytics() {
+	    return this;
+	  };
+	
+	  Analytics.prototype = {
+	
+	    initialize: function initialize(trackingID, options) {
+	      var src = 'https://www.google-analytics.com/';
+	
+	      if ((typeof trackingID === 'undefined' ? 'undefined' : _typeof(trackingID)) === 'object') {
+	        options = trackingID;
+	      }
+	
+	      options = options || {};
+	
+	      if (options.debug) {
+	        src += 'analytics_debug.js';
+	        delete options.debug;
+	      } else {
+	        src += 'analytics.js';
+	      }
+	
+	      /* jshint ignore:start */
+	      (function (i, s, o, g, r, a, m) {
+	        i['GoogleAnalyticsObject'] = r;
+	        i[r] = i[r] || function () {
+	          (i[r].q = i[r].q || []).push(arguments);
+	        }, i[r].l = 1 * new Date();
+	        a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+	        a.async = 1;
+	        a.src = g;
+	        m.parentNode.insertBefore(a, m);
+	      })(window, document, 'script', src, 'ga');
+	      /* jshint ignore:end */
+	
+	      if (trackingID) {
+	        options = JSON.stringify(options) === "{}" ? undefined : options;
+	        this.create(trackingID, options);
+	      }
+	    },
+	
+	    create: function create(trackingID, options) {
+	      if (!trackingID) {
+	        warn('tracking id is required to initialize.');
+	        return;
+	      }
+	
+	      _set.call(this, 'create', trackingID, 'auto', options);
+	    },
+	
+	    name: function name(_name) {
+	      var self = new Analytics();
+	      self._namespace = _name;
+	      return self;
+	    },
+	
+	    set: function set(key, value) {
+	      if (!key || !key.length) {
+	        warn('set: `key` is required.');
+	        return;
+	      }
+	
+	      _set.call(this, 'set', key, value);
+	
+	      return this;
+	    },
+	
+	    plugin: function plugin(name, options) {
+	      if (!name || !name.length) {
+	        warn('plugin: `name` is required.');
+	        return;
+	      }
+	
+	      _set.call(this, 'require', name, options);
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/pages
+	    pageview: function pageview(path, options) {
+	      _set.call(this, 'send', 'pageview', path, options);
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/screens
+	    screenview: function screenview(screenName, options) {
+	      if (!screenName) {
+	        warn('screenview: `screenName` is required.');
+	        return;
+	      }
+	
+	      options = options || {};
+	      options.screenName = screenName;
+	      _set.call(this, 'send', 'screenview', options);
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/events
+	    event: function event(category, action, options) {
+	      if (!category || !action) {
+	        warn('event: both `category` and `action` are required.');
+	        return;
+	      }
+	
+	      if (options && typeof options.eventValue !== 'undefined' && typeof options.eventValue !== 'number') {
+	        warn('event: expected `options.eventValue` to be a Number.');
+	        options.eventValue = undefined;
+	      }
+	
+	      if (options && options.nonInteraction && typeof options.nonInteraction !== 'boolean') {
+	        warn('event: expected `options.nonInteraction` to be a boolean.');
+	        options.nonInteraction = false;
+	      }
+	
+	      _set.call(this, 'send', 'event', category, action, options);
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
+	    timing: function timing(timingCategory, timingVar, timingValue, options) {
+	      if (!timingCategory || !timingVar || typeof timingValue === 'undefined') {
+	        warn('timing: `timingCategory`, `timingVar`, and `timingValue` are required.');
+	      } else if (typeof timingValue !== 'number') {
+	        warn('event: expected `timingValue` to be a Number.');
+	      } else {
+	        _set.call(this, 'send', 'timing', timingCategory, timingVar, timingValue, options);
+	      }
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/exceptions
+	    exception: function exception(message, isFatal) {
+	      _set.call(this, 'send', 'exception', {
+	        exDescription: message,
+	        exFatal: !!isFatal
+	      });
+	
+	      return this;
+	    },
+	
+	    // https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets
+	    custom: function custom(key, value) {
+	      if (!/(dimension|metric)[0-9]+/i.test(key)) {
+	        warn('custom: key must match dimension[0-9]+ or metric[0-9]+');
+	        return;
+	      }
+	
+	      _set.call(this, 'set', key, value);
+	
+	      return this;
+	    }
+	
+	  };
+	
+	  var ua = new Analytics();
+	  /* istanbul ignore next */
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	      return ua;
+	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && _typeof(module.exports) === 'object') {
+	    module.exports = ua;
+	  } else {
+	    global.analytics = ua;
+	  }
+	})(undefined);
+
+/***/ }),
+/* 7 */
+/*!**********************************!*\
+  !*** ./src/js/event-trackers.js ***!
+  \**********************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _trackers = __webpack_require__(/*! ./trackers */ 5);
+	
+	var _trackers2 = _interopRequireDefault(_trackers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Events = function () {
+		function Events() {
+			_classCallCheck(this, Events);
+		}
+	
+		_createClass(Events, [{
+			key: 'monthlymentor',
+	
+			// Track monthly mentor signups thorugh the page
+			value: function monthlymentor() {
+				if (document.getElementById('monthlymentorpage')) document.getElementById('monthlymentorpage').addEventListener('submit', function (f) {
+					_trackers2.default.event('Benefits', 'Signup', 'Fivebf');
+				});
+			}
+		}, {
+			key: 'init',
+			value: function init() {
+				// this.monthlymentor( )
+			}
+		}]);
+	
+		return Events;
+	}();
+	
+	exports.default = new Events();
+
+/***/ }),
+/* 8 */
+/*!***************************!*\
+  !*** ./modules/config.js ***!
+  \***************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(__dirname, process) {"use strict";
+	
+	module.exports = {
+		// Identity variables used in pug templates
+		identity: {
+			title: "Website",
+			desc: "Description of website",
+			"logo": "logo.jpg"
+		},
+		// System vars managing some pug elements as well as file paths
+		system: {
+			public: __dirname + '/../docs/',
+			source: __dirname + '/../src/',
+			url: process.env.local ? 'http://localhost:3000/' : 'https://www.liveurl.com',
+			gverification: undefined,
+			year: new Date().getFullYear()
+		},
+		// About the author. Change this to your own unless you went me to get credit for your page of course... <3
+		author: {
+			firstname: "Mentor",
+			lastname: "Palokaj",
+			email: "mentor@palokaj.co",
+			twitter: "@actuallymentor",
+			// facebook profile id, used for retargeting ad permissions
+			facebook: "1299359953416544",
+			url: "https://www.skillcollector.com/"
+		},
+		// Tracking codes
+		track: {
+			ga: "UA-XXXXXXXX-XX"
+		}
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, "/", __webpack_require__(/*! ./../~/process/browser.js */ 9)))
+
+/***/ }),
+/* 9 */
+/*!******************************!*\
+  !*** ./~/process/browser.js ***!
+  \******************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	// shim for using process in browser
+	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout() {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	})();
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+	
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+	
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+	
+	    var len = queue.length;
+	    while (len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+	
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+	
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+	
+	function noop() {}
+	
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+	
+	process.listeners = function (name) {
+	    return [];
+	};
+	
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+	
+	process.cwd = function () {
+	    return '/';
+	};
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function () {
+	    return 0;
+	};
 
 /***/ })
 /******/ ]);

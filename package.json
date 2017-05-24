@@ -35,6 +35,7 @@
     "pug": "^2.0.0-beta6",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
+    "universal-ga": "^1.1.0",
     "watch": "^1.0.1",
     "webpack": "^1.14.0"
   }
