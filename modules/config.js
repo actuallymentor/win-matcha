@@ -15,13 +15,13 @@ module.exports = {
 	},
 	// About the author. Change this to your own unless you went me to get credit for your page of course... <3
 	author: {
-		firstname: "Mentor",
-		lastname: "Palokaj",
+		firstname: "True",
+		lastname: "Matcha",
 		email: "mentor@palokaj.co",
 		twitter: "@actuallymentor",
 		// facebook profile id, used for retargeting ad permissions
 		facebook: "1299359953416544",
-		url: "https://www.skillcollector.com/"
+		url: "http://www.truematcha.nl/"
 	},
 	// Tracking codes
 	track: {

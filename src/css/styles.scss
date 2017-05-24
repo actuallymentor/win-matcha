@@ -1,10 +1,15 @@
-$background-color: #efefef;
+$background-color: white;
+$background-accent: #B3E5FC;
 
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
 
 /* grid */
 @import "grid";
+
+// Helpers
+.full { width: 100%; }
+.row { margin-bottom: 0; }
 
 body {
 	// Override browser default padding and margin
@@ -20,53 +25,98 @@ body {
 	// Backgorund color
 	background: $background-color;
 
-	// Matcha background image
-    // background-image: url(/assets/matcha-background.jpg);
-    // background-size: cover;
-    // background-repeat: no-repeat;
-    // background-attachment: fixed;
-    // background-position: center;
-    background: #e3f2fd;
+}
+
+.hover {
+  transition-duration: 0.5s;
+  &:hover {
+    transition-duration: 0.5s;
+      box-shadow: #c3c3c3 3px 3px 5px;
+  }
 }
 
 main {
 	// make footer sticky
 	flex: 1 0 auto;
-	// Vertically align content
-	display: flex;
-	align-items: center;
-  	justify-content: center;
-  	flex-direction: column;
-  	#thebox {
-  		padding: 20px;
-  		width: 100%;
-  		h1 {
-  			text-align: center;
-  			margin-bottom: 80px;
-  		}
-  		#subform {
-  			margin-top: 15px;
-  		}
-  		#signup {
-  			input {
-  				padding: 10px;
-  				border: 0;
-  				margin: 5px 0;
-  				text-align: center;
-  			}
-  			input[type="submit"] {
-  				background-color: #4caf50;
-  				color: white;
-  				font-size: 20px;
-  			}
-  			input[type="checkbox"] {
-  				margin-right: 10px;
-  			}
-  		}
-  	}
-  	.whiteback {
-  		background: rgba(255, 255, 255, 0.5);
-  	}
+  display: flex;
+  flex-direction: column;
+	#top {
+    display: flex;
+    z-index: 1;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 300px;
+    text-align: center;
+    h1 {
+      margin-top: 0;
+      font-size: 40px;
+      padding: 10px 40px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    // Matcha background image
+    background-image: url(/assets/matcha-background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: white;
+    box-shadow: grey 1px 1px 20px;
+  }
+  #countwrap {
+    text-align: center;
+    background: #f1f1f1;
+    font-style: italic;
+  }
+  #maincontainer {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+	#thebox {
+		width: 100%;
+		#form {
+	    padding: 20px;
+      background: $background-accent;
+      text-align: center;
+      border-radius: 5px;
+      #subform {
+        margin-top: 60px;
+      }
+      #why {
+        text-align: left;
+      }
+		}
+    #prize {
+      #giftset {
+        list-style: none;
+        text-align: center;
+        line-height: 30px;
+      }
+    }
+		#signup {
+			input {
+				padding: 10px;
+				border: 0;
+				margin: 5px 0;
+				text-align: center;
+			}
+			input[type="submit"] {
+				background-color: #4caf50;
+				color: white;
+				font-size: 20px;
+        border-radius: 3px;
+			}
+			input[type="checkbox"] {
+				margin-right: 10px;
+			}
+		}
+	}
+	.whiteback {
+		background: rgba(255, 255, 255, 0.5);
+	}
 }
 
 #footer {
