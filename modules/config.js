@@ -9,7 +9,7 @@ module.exports = {
 	system: {
 		public: __dirname + '/../docs/',
 		source: __dirname + '/../src/',
-		url: process.env.local ? 'http://localhost:3000/' : 'https://www.liveurl.com',
+		url: process.env.local ? 'http://localhost:3000/' : 'https://actuallymentor.github.io/win-matcha/',
 		gverification: undefined,
 		year: new Date().getFullYear()
 	},
