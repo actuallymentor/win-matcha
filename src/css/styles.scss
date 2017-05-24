@@ -10,6 +10,7 @@ $background-accent: #B3E5FC;
 // Helpers
 .full { width: 100%; }
 .row { margin-bottom: 0; }
+.hide { opacity: 0; }
 
 body {
 	// Override browser default padding and margin
@@ -31,7 +32,7 @@ body {
   transition-duration: 0.5s;
   &:hover {
     transition-duration: 0.5s;
-      box-shadow: #c3c3c3 3px 3px 5px;
+      box-shadow: #a5a5a5 3px 3px 5px;
   }
 }
 
@@ -76,27 +77,37 @@ main {
     flex-direction: column;
   }
 	#thebox {
-		width: 100%;
+    #form, #prize {
+      margin-top: 20px;
+    }
 		#form {
 	    padding: 20px;
       background: $background-accent;
-      text-align: center;
+      text-align: left;
       border-radius: 5px;
+      h2 {
+        text-align: center;
+        font-size: 35px;
+      }
       #subform {
         margin-top: 60px;
       }
-      #why {
-        text-align: left;
-      }
+      #why {  }
 		}
     #prize {
       #giftset {
         list-style: none;
         text-align: center;
-        line-height: 30px;
+        line-height: 25px;
       }
     }
 		#signup {
+      text-align: center;
+      #sterretje {
+        opacity: 0.8;
+        font-size: 12px;
+        text-align: center;
+      }
 			input {
 				padding: 10px;
 				border: 0;

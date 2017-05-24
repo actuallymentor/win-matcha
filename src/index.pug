@@ -9,8 +9,30 @@ html
 			div.row.full#countwrap
 				h3.col.s12 De winnaar wordt bekend over 
 					span#countdown 
-			div.container#maincontainer
-				div.row#thebox
+			div.row#maincontainer
+				div.col.l8.offset-l1.m12.s12#thebox
+					div.col.m6.s12#form
+						div.row
+							h2 Doe mee en win:
+							form( action="https://sendy.skillcollector.com/subscribe" method="POST" accept-charset="utf-8" ).col.l8.offset-l2.m12.s12#signup
+								p.col.s12 Waarom drink jij graag matcha?
+								div#why.col.s12
+									input#brain( type="checkbox" name="brain" value="true" )
+									label( for="brain" ) Om me te concentreren
+									br
+									input#taste( type="checkbox" name="taste" value="true" )
+									label( for="taste" ) Omdat ik het lekker vind
+									br
+									input#health( type="checkbox" name="health" value="true" )
+									label( for="health" ) Omdat het gezond is
+										span.hide ___
+									br
+								div#subform.col.s12
+									input( type="text" name="name" id="name", placeholder="Uw Naam" ).col.m12.s12
+									input( type="email" name="email" id="email", placeholder="Uw Email" ).col.m12.s12
+									input( type="hidden" name="list" value="mOyHMV7z2GouhMaCpTdqpw" )
+									input( type="submit" name="submit" id="submit", value="Doe gratis mee!" ).col.m12.hover.s12
+								p.col.s12#sterretje * Je krijgt een bevestigingsemail
 					div.col.m6.s12#prize
 						img( src="./assets/aiya-gift-set-fulltransx500.png" ).col.s12
 						ul.col.s12#giftset
@@ -19,23 +41,4 @@ html
 							li Bamboe chasen klopper ( € 14,00 )
 							li Matcha chasen houder ( € 9,00 )
 							li Bamboe matcha lepel ( € 3,00 )
-					div.col.m6.s12#form
-						h2 Doe mee en win:
-						form( action="https://sendy.skillcollector.com/subscribe" method="POST" accept-charset="utf-8" ).row#signup
-							p.col.s12 Waarom drink jij graag matcha?
-							div#why.col.m6.offset-m3
-								input#brain( type="checkbox" name="brain" value="true" )
-								label( for="brain" ) Om me te concentreren
-								br
-								input#taste( type="checkbox" name="taste" value="true" )
-								label( for="taste" ) Omdat het lekker is
-								br
-								input#health( type="checkbox" name="health" value="true" )
-								label( for="health" ) Omdat het gezond is
-								br
-							div#subform.col.s12
-								input( type="text" name="name" id="name", placeholder="Uw Naam" ).col.m12
-								input( type="email" name="email" id="email", placeholder="Uw Email" ).col.m12
-								input( type="hidden" name="list" value="mOyHMV7z2GouhMaCpTdqpw" )
-								input( type="submit" name="submit" id="submit", value="Doe gratis mee!" ).col.m12.hover
 	include pug/_footer.pug
