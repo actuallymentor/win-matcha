@@ -9,7 +9,7 @@ module.exports = {
 	system: {
 		public: __dirname + '/../docs/',
 		source: __dirname + '/../src/',
-		url: process.env.local ? 'http://localhost:3000/' : 'https://actuallymentor.github.io/win-matcha/',
+		url: process.env.local ? 'http://localhost:3000/' : 'http://truematcha.nl/',
 		gverification: undefined,
 		year: new Date().getFullYear()
 	},
@@ -25,6 +25,6 @@ module.exports = {
 	},
 	// Tracking codes
 	track: {
-		ga: "UA-XXXXXXXX-XX"
+		ga: "UA-99846693-1"
 	}
 }
