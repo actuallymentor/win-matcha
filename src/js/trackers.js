@@ -22,4 +22,6 @@ export class GoogleAnalytics {
 
 }
 
-export default new GoogleAnalytics
+const thega = new GoogleAnalytics
+
+export default thega
