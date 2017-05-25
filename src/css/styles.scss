@@ -12,6 +12,13 @@ $background-accent: #E8A70C;
 .row { margin-bottom: 0; }
 .hide { opacity: 0; }
 .center { text-align: center; }
+.flexme {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 body {
 	// Override browser default padding and margin
