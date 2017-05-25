@@ -11,6 +11,7 @@ $background-accent: #E8A70C;
 .full { width: 100%; }
 .row { margin-bottom: 0; }
 .hide { opacity: 0; }
+.center { text-align: center; }
 
 body {
 	// Override browser default padding and margin
@@ -67,7 +68,9 @@ main {
   #countwrap {
     text-align: center;
     background: #f1f1f1;
-    font-style: italic;
+    img {
+      margin: 15px 10px 10px 10px;
+    }
   }
   #maincontainer {
     flex: 1 0 auto;
@@ -91,7 +94,8 @@ main {
         font-size: 35px;
       }
       #subform {
-        margin-top: 60px;
+        margin-top: 40px;
+        margin-bottom: 20px;
       }
       #why {  }
 		}
