@@ -10,7 +10,7 @@ const update = f => setInterval( f => {
 		let minutes 	= Math.floor( ( distance % ( 1000 * 60 * 60 ) ) / ( 1000 * 60 ) )
 		let seconds 	= Math.floor( ( distance % ( 1000 * 60 ) ) / 1000 )
 
-		id( 'countdown' ).innerHTML = `${days}:${hours}:${minutes}:${seconds}`
+		id( 'countdown' ).innerHTML = `${days} dagen - ${hours} uur, ${minutes} minuten & ${seconds} seconden`
 
 		if (distance < 0) {
 		    clearInterval( update )
